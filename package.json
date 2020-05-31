@@ -1,7 +1,8 @@
 {
   "name": "@abdulghani/promise-modal",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "react.js promise based modal",
+  "keywords": ["react", "reactjs", "modal", "promise based modal", "promise", "promise modal"],
   "main": "index.js",
   "scripts": {
     "build": "rm -rf ./build && babel ./src --out-dir ./build --extensions \".ts,.tsx\" && tsc"

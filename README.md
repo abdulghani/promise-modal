@@ -5,10 +5,10 @@ You can simply create your own modal component with jsx react component and rend
   // somewhere in your component
   const handleDelete = (e: MouseEvent) => {
     showModal()
-      .then((e: MouseEvent) => {
+      .then((e) => {
         // do something when confirmed
       })
-      .catch((e: MouseEvent) => {
+      .catch((e) => {
         // do something when cancelled
       });
   }
