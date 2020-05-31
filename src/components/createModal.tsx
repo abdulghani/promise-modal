@@ -2,13 +2,18 @@ import ReactDOM from "react-dom";
 import React, { MouseEvent } from "react";
 
 export declare interface ModalProp {
-  onConfirm: (e: Event | MouseEvent) => void;
-  onCancel: (e: Event | MouseEvent) => void;
+  onConfirm: (e: Event | MouseEvent | undefined) => void;
+  onCancel: (e: Event | MouseEvent | undefined) => void;
   [args: string]: any;
 }
 
-const createModal = (Modal: React.FC<ModalProp>): Function => {
-  let promise: Promise<any>, resolve: Function, reject: Function;
+function createModal(
+  Modal: React.FC<ModalProp>,
+  root: string = "root"
+): Function {
+  let promise: Promise<Event | MouseEvent | undefined>,
+    resolve: Function,
+    reject: Function;
 
   const key = Math.floor(Math.random() * 1000000);
   const container = document.createElement("div");
@@ -19,24 +24,24 @@ const createModal = (Modal: React.FC<ModalProp>): Function => {
       resolve = res;
       reject = rej;
     });
-    document.getElementById("root").appendChild(container);
+    document.getElementById(root).appendChild(container);
   };
 
   const removeContainer = () => {
     ReactDOM.unmountComponentAtNode(container);
-    document.getElementById("root").removeChild(container);
+    document.getElementById(root).removeChild(container);
   };
 
-  const onCancel = (e: Event) => {
+  const onCancel = (e: Event | MouseEvent | undefined) => {
     e && e.stopPropagation();
     removeContainer();
-    reject();
+    reject(e);
   };
 
-  const onConfirm = (e: Event) => {
+  const onConfirm = (e: Event | MouseEvent | undefined) => {
     e && e.stopPropagation();
     removeContainer();
-    resolve();
+    resolve(e);
   };
 
   return (props: any) => {
@@ -47,6 +52,6 @@ const createModal = (Modal: React.FC<ModalProp>): Function => {
     );
     return promise;
   };
-};
+}
 
 export default createModal;
