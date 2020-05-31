@@ -15,8 +15,8 @@ You can simply create your own modal component with jsx react component and rend
 ```
 
 ## Installation
-yarn - `yarn add @abdulghani/promise-modal`\
-npm - `npm install @abdulghani/promise-modal`
+yarn `yarn add @abdulghani/promise-modal`\
+npm `npm install @abdulghani/promise-modal`
 
 ## Usage
 Prepare your modal component that's going to render your modal that had at least `onConfirm` and `onCancel` props.\
@@ -59,7 +59,7 @@ Then you can call the function away to show the modal in your component.
 ```
 
 ## Config & Properties
-#### custom root node
+### custom root node
 By default it targets the `root` node id in your dom to mount the modal element.\
 you could customize that by passing your root node id to the second argument of `createModal` function.\
 like so
