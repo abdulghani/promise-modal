@@ -1,3 +1,3 @@
 import createModal from "./components/createModal";
 
-export default { createModal };
+export default createModal;

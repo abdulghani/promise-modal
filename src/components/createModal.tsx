@@ -7,11 +7,11 @@ export declare interface ModalProp {
   [args: string]: any;
 }
 
-function createModal(
+function createModal<ChildProps>(
   Modal: React.FC<ModalProp>,
   root: string = "root"
-): Function {
-  let promise: Promise<Event | MouseEvent | undefined>,
+): (p?: ChildProps) => Promise<[string, MouseEvent | undefined]> {
+  let promise: Promise<[string, MouseEvent | undefined]>,
     resolve: Function,
     reject: Function;
 
@@ -32,19 +32,21 @@ function createModal(
     document.getElementById(root).removeChild(container);
   };
 
-  const onCancel = (e: Event | MouseEvent | undefined) => {
+  const onConfirm = (e: MouseEvent | undefined) => {
+    e && e.persist();
     e && e.stopPropagation();
     removeContainer();
-    reject(e);
+    resolve(["confirmed", e]);
   };
 
-  const onConfirm = (e: Event | MouseEvent | undefined) => {
+  const onCancel = (e: MouseEvent | undefined) => {
+    e && e.persist();
     e && e.stopPropagation();
     removeContainer();
-    resolve(e);
+    reject(["cancelled", e]);
   };
 
-  return (props: any) => {
+  return (props?: ChildProps): Promise<[string, MouseEvent | undefined]> => {
     init();
     ReactDOM.render(
       <Modal onCancel={onCancel} onConfirm={onConfirm} {...props} />,
